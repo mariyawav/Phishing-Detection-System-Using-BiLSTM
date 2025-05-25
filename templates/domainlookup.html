@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Lookup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-text">🌐 Domain Lookup</h1>
+        <div class="card">
+            <form action="/domainlookup" method="POST">
+                <input type="text" name="domain" placeholder="Enter domain (e.g., example.com)" required>
+                <button type="submit" class="btn neon-button">Lookup</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

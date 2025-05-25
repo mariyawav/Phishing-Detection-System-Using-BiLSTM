@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detailed Domain Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-text">🧠 Detailed Domain Report</h1>
+
+        {% if report %}
+        
+        {% if report.whois %}
+        <div class="card">
+            <h2>🔍 WHOIS Information</h2>
+            <p><strong>Registrar:</strong> {{ report.whois.registrar or 'N/A' }}</p>
+            <p><strong>Created On:</strong> {{ report.whois.creation_date or 'N/A' }}</p>
+            <p><strong>Updated On:</strong> {{ report.whois.updated_date or 'N/A' }}</p>
+            <p><strong>Registrant Country:</strong> {{ report.whois.country or 'N/A' }}</p>
+        </div>
+        {% endif %}
+
+        {% if report.ip %}
+        <div class="card">
+            <h2>📍 IP Geolocation</h2>
+            <p><strong>IP Address:</strong> {{ report.ip.ip or 'N/A' }}</p>
+            <p><strong>Location:</strong> {{ report.ip.city or 'N/A' }}, {{ report.ip.country or 'N/A' }}</p>
+            <p><strong>ASN:</strong> {{ report.ip.asn or 'N/A' }}</p>
+            <p><strong>ISP:</strong> {{ report.ip.isp or 'N/A' }}</p>
+        </div>
+        {% endif %}
+
+        {% if report.reputation %}
+        <div class="card">
+            <h2>🌐 Domain Reputation</h2>
+            <p><strong>Reputation Score:</strong> {{ report.reputation.score or 'N/A' }}</p>
+            <p><strong>Verdict:</strong> {{ report.reputation.verdict or 'N/A' }}</p>
+            <p><strong>Category:</strong> {{ report.reputation.category or 'N/A' }}</p>
+        </div>
+        {% endif %}
+
+        {% if report.dns %}
+        <div class="card">
+            <h2>📡 DNS Records</h2>
+            <p><strong>MX Records:</strong> {{ report.dns.mx or 'N/A' }}</p>
+            <p><strong>NS Records:</strong> {{ report.dns.ns or 'N/A' }}</p>
+            <p><strong>A Records:</strong> {{ report.dns.a or 'N/A' }}</p>
+        </div>
+        {% endif %}
+
+        {% if report.ssl %}
+        <div class="card">
+            <h2>🔐 SSL Certificate</h2>
+            <p><strong>Issuer:</strong> {{ report.ssl.issuer or 'N/A' }}</p>
+            <p><strong>Valid From:</strong> {{ report.ssl.valid_from or 'N/A' }}</p>
+            <p><strong>Valid To:</strong> {{ report.ssl.valid_to or 'N/A' }}</p>
+        </div>
+        {% endif %}
+
+        {% if report.threats %}
+        <div class="card">
+            <h2>🚨 Threat Intelligence</h2>
+            <p><strong>Malware Detected:</strong> {{ report.threats.malware or 'N/A' }}</p>
+            <p><strong>Phishing Detected:</strong> {{ report.threats.phishing or 'N/A' }}</p>
+            <p><strong>Suspicious URLs:</strong> {{ report.threats.urls or 'N/A' }}</p>
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <h2>🖼️ Screenshot</h2>
+            {% if report.screenshot %}
+                <img src="{{ report.screenshot }}" alt="Screenshot of Domain" width="100%">
+            {% else %}
+                <p>No screenshot available.</p>
+            {% endif %}
+        </div>
+
+        {% else %}
+            <p>No report data available.</p>
+        {% endif %}
+
+        <div id="bottom-buttons">
+            <a href="/" class="btn neon-button">🏠 Back to Dashboard</a>
+            <a href="/domainlookup" class="btn neon-button">🔄 Analyze Another Domain</a>
+        </div>
+    </div>
+</body>
+</html>

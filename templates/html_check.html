@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="glow">File Scanner</h1>
+
+        <div class="card">
+            <h2>Upload or Paste File Content</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <!-- File Upload -->
+                <input type="file" name="html_file" accept="*/*">
+                <p style="margin: 1rem 0;">OR</p>
+
+                <!-- Textarea for Raw HTML -->
+                <textarea name="html_code" rows="12" placeholder="Paste raw content here..." style="
+                    background: rgba(10, 10, 20, 0.7);
+                    border: 1px solid rgba(0, 247, 255, 0.3);
+                    border-radius: 8px;
+                    padding: 1rem;
+                    color: var(--text);
+                    width: 100%;
+                    font-family: var(--font-secondary);
+                    font-size: 1rem;
+                    resize: vertical;
+                    transition: var(--transition);
+                "></textarea>
+
+                <button type="submit" class="btn btn-primary neon-button">Scan File</button>
+            </form>
+        </div>
+
+        {% if file_id %}
+        <div id="status-box" style="margin-top: 20px;">Status: <span id="status-text">Processing...</span></div>
+        <button id="view-report-btn" class="btn neon-button" style="display:none; margin-top: 10px;">
+            Check Results
+        </button>
+
+        <script>
+            const fileId = "{{ file_id }}";
+            const btn = document.getElementById("view-report-btn");
+            const statusText = document.getElementById("status-text");
+
+            function pollStatus() {
+                fetch(`/check_analysis_status/${fileId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === "completed") {
+                            statusText.innerText = "Completed";
+                            btn.style.display = "inline-block";
+                            btn.onclick = () => {
+                                window.location.href = `/html_report/${fileId}`;
+                            };
+                        } else {
+                            setTimeout(pollStatus, 4000);  // Poll every 4 seconds
+                        }
+                    });
+            }
+
+            pollStatus();
+        </script>
+        {% endif %}
+
+        <div class="button-container" style="margin-top: 20px;">
+            <a href="{{ url_for('dashboard') }}" class="btn neon-button">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

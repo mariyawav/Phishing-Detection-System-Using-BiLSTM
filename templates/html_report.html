@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Scan Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">File Scan Report</h2>
+
+        {% if error %}
+            <div class="message" style="padding: 1rem; background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; border-radius: 5px;">
+                <p>{{ error }}</p>
+            </div>
+        {% else %}
+            <p>Results for your uploaded file:</p>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Harmless</td><td>{{ harmless }}</td></tr>
+                    <tr><td>Suspicious</td><td>{{ suspicious }}</td></tr>
+                    <tr><td>Malicious</td><td>{{ malicious }}</td></tr>
+                    <tr><td>Undetected</td><td>{{ undetected }}</td></tr>
+                </tbody>
+            </table>
+        {% endif %}
+
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('html_check') }}" class="btn btn-primary">Upload Another File</a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="margin-left: 10px;">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-text">🔍 URL Prediction Results</h1>
+        
+        <!-- Prediction Result Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="{{ 'phishing' if label == 'Phishing' else 'legitimate' }}">
+                    <td>{{ url }}</td>
+                    <td>{{ label }}</td>
+                    <td>{{ confidence }}%</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Buttons Container for "Check Another URL" and "Back to Dashboard" -->
+        <div class="button-container">
+            <form action="/url_check" method="get">
+                <button class="btn btn-primary" type="submit">Check Another URL</button>
+            </form>
+            <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+
+    </div>
+</body>
+</html>
